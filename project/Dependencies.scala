@@ -62,6 +62,9 @@ object Dependencies {
 
     object http4s {
       val blazeServer = "org.http4s" %% "http4s-blaze-server" % Versions.http4s
+      val blazeCore   = "org.http4s" %% "http4s-blaze-core"    % Versions.http4s
+
+      val all = Seq(blazeServer, blazeCore)
     }
 
     val scalaTest = "org.scalatest"     %% "scalatest"   % Versions.scalaTest
@@ -71,13 +74,13 @@ object Dependencies {
   val server = Seq(
     Libraries.mongo4cats.core,
     Libraries.mongo4cats.circe,
-    Libraries.pureconfig.core,
-    Libraries.http4s.blazeServer
+    Libraries.pureconfig.core
   ) ++
     Libraries.circe.all ++
     Libraries.tapir.all ++
     Libraries.logging.all ++
-    Libraries.sttp.all
+    Libraries.sttp.all ++
+    Libraries.http4s.all
 
   val test = Seq(
     Libraries.scalaTest           % Test,
