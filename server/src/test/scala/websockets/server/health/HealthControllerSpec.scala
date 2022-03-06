@@ -1,8 +1,8 @@
 package websockets.server.health
 
 import cats.effect.{IO, Ref}
-import org.http4s.implicits.*
-import org.http4s.*
+import org.http4s.implicits._
+import org.http4s._
 import org.http4s.Header.Raw
 import org.typelevel.ci.CIString
 import websockets.server.ControllerSpec

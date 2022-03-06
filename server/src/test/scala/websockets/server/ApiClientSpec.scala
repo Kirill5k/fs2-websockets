@@ -14,11 +14,8 @@ trait ApiClientSpec extends CatsSpec {
     AsyncHttpClientCatsBackend.stub[IO]
 
   def json(path: String): String = Source.fromResource(path).getLines().toList.mkString
-}
 
-object RequestOps {
-
-  extension (req: client3.Request[?, ?])
+  implicit final class RequestOps(private val req: client3.Request[_, _]) {
     def isPost: Boolean =
       req.method == Method.POST
 
@@ -50,4 +47,5 @@ object RequestOps {
 
     def hasParams(params: Map[String, String]): Boolean =
       req.uri.params.toMap.toSet[(String, String)].subsetOf(params.toSet)
+  }
 }

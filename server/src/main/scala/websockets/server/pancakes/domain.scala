@@ -12,7 +12,7 @@ object domain {
     final case class Milk(liters: Double) extends PancakeIngredient
     final case class Eggs(count: Int) extends PancakeIngredient
 
-    private implicit val config: Configuration = Configuration.default
+    implicit val config: Configuration = Configuration.default
       .withDiscriminator("ingredient")
       .withSnakeCaseConstructorNames
 
@@ -24,7 +24,7 @@ object domain {
     case class IngredientReceived(ingredient: PancakeIngredient) extends PancakeStatus
     case object PancakeReady extends PancakeStatus
 
-    private implicit val config: Configuration = Configuration.default
+    implicit val config: Configuration = Configuration.default
       .withDiscriminator("status")
       .withSnakeCaseConstructorNames
 

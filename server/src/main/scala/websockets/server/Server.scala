@@ -2,14 +2,14 @@ package websockets.server
 
 import cats.effect.Async
 import fs2.Stream
-import org.http4s.{HttpApp, HttpRoutes}
+import org.http4s.{HttpApp}
 import org.http4s.blaze.server.BlazeServerBuilder
 import websockets.server.common.config.ServerConfig
 
 import scala.concurrent.ExecutionContext
-import scala.concurrent.duration.*
+import scala.concurrent.duration._
 
-object Server:
+object Server {
   def serve[F[_]: Async](config: ServerConfig, routes: HttpApp[F], ec: ExecutionContext): Stream[F, Unit] =
     BlazeServerBuilder[F]
       .withExecutionContext(ec)
@@ -19,3 +19,4 @@ object Server:
       .withHttpApp(routes)
       .serve
       .drain
+}

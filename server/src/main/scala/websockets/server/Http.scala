@@ -2,12 +2,12 @@ package websockets.server
 
 import cats.Monad
 import cats.effect.Async
-import cats.implicits.*
-import org.http4s.*
-import org.http4s.implicits.*
-import org.http4s.server.middleware.*
+import org.http4s._
+import org.http4s.implicits._
+import org.http4s.server.middleware._
 import websockets.server.health.Health
-import scala.concurrent.duration.*
+
+import scala.concurrent.duration._
 
 final class Http[F[_]: Async] private (
     private val health: Health[F]
@@ -25,5 +25,6 @@ final class Http[F[_]: Async] private (
   val app: HttpApp[F] = loggers(middleware(routes).orNotFound)
 }
 
-object Http:
+object Http {
   def make[F[_]: Async](health: Health[F]): F[Http[F]] = Monad[F].pure(new Http[F](health))
+}
