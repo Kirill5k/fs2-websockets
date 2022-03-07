@@ -12,11 +12,11 @@ import org.http4s.HttpRoutes
 import sttp.tapir._
 import sttp.tapir.server.ServerEndpoint
 import sttp.tapir.server.http4s.Http4sServerInterpreter
-import websockets.server.common.http.Controller
+import websockets.server.common.http.HttpController
 
 final class HealthController[F[_]: Async](
     private val startupTime: Ref[F, Instant]
-) extends Controller[F] {
+) extends HttpController[F] {
 
   implicit val statusSchema: Schema[HealthController.AppStatus] = Schema.string
 
@@ -35,7 +35,7 @@ object HealthController {
     implicit val appStatusCodec: Codec[AppStatus] = deriveCodec[AppStatus]
   }
 
-  def make[F[_]: Async]: F[Controller[F]] =
+  def make[F[_]: Async]: F[HttpController[F]] =
     Temporal[F].realTimeInstant
       .flatMap(ts => Ref.of(ts))
       .map(ref => new HealthController[F](ref))

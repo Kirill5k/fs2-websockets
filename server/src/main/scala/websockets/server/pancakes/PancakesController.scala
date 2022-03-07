@@ -6,19 +6,18 @@ import cats.syntax.either._
 import cats.syntax.functor._
 import fs2.Pipe
 import org.http4s.HttpRoutes
+import org.http4s.server.websocket.WebSocketBuilder2
 import sttp.capabilities.WebSockets
 import sttp.capabilities.fs2.Fs2Streams
 import sttp.tapir._
 import sttp.tapir.server.ServerEndpoint.Full
 import sttp.tapir.server.http4s._
-import org.http4s.server.websocket.WebSocketBuilder2
-import websockets.server.common.http.Controller
+import websockets.server.common.http.WebSocketController
 import websockets.server.pancakes.domain.{PancakeIngredient, PancakeStatus}
 
 final private class PancakesController[F[_]: Async](
-    private val pancakesService: PancakesService[F],
-    private val wsb: WebSocketBuilder2[F]
-) extends Controller[F] {
+    private val pancakesService: PancakesService[F]
+) extends WebSocketController[F] {
 
   private val pansQueryInput: EndpointInput.Query[Int] = query[Int]("pans")
     .description("The number of frying pans to use in parallel")
@@ -41,6 +40,6 @@ final private class PancakesController[F[_]: Async](
           .handleError(_.getMessage.asLeft[Pipe[F, PancakeIngredient, PancakeStatus]])
       }
 
-  override def routes: HttpRoutes[F] =
+  override def routes(wsb: WebSocketBuilder2[F]): HttpRoutes[F] =
     Http4sServerInterpreter[F]().toWebSocketRoutes(pancakesRoute)(wsb)
 }
