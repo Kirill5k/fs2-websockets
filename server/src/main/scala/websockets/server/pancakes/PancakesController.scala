@@ -43,3 +43,8 @@ final private class PancakesController[F[_]: Async](
   override def routes(wsb: WebSocketBuilder2[F]): HttpRoutes[F] =
     Http4sServerInterpreter[F]().toWebSocketRoutes(pancakesRoute)(wsb)
 }
+
+object PancakesController {
+  def make[F[_]: Async](service: PancakesService[F]): F[PancakesController[F]] =
+    Async[F].pure(new PancakesController[F](service))
+}
