@@ -1,18 +1,20 @@
 package websockets.server.pancakes
 
 import cats.effect.Async
-import org.http4s.server.websocket.WebSocketBuilder2
+import cats.syntax.flatMap._
+import cats.syntax.functor._
+import websockets.server.common.http.Controller
 
 trait Pancakes[F[_]] {
-  def webSocketController: WebSocketBuilder2[F]
+  def controller: Controller[F]
 }
 
 object Pancakes {
   def make[F[_]: Async]: F[Pancakes[F]] =
     for {
-      service    <- PancakesService.make[F]
-      controller <- PancakesController.make[F](service)
+      svc  <- PancakesService.make[F]
+      cont <- PancakesController.make[F](svc)
     } yield new Pancakes[F] {
-      override def webSocketController: WebSocketBuilder2[F] = controller
+      override def controller: Controller[F] = cont
     }
 }

@@ -12,12 +12,12 @@ import sttp.capabilities.fs2.Fs2Streams
 import sttp.tapir._
 import sttp.tapir.server.ServerEndpoint.Full
 import sttp.tapir.server.http4s._
-import websockets.server.common.http.WebSocketController
+import websockets.server.common.http.Controller
 import websockets.server.pancakes.domain.{PancakeIngredient, PancakeStatus}
 
 final private class PancakesController[F[_]: Async](
     private val pancakesService: PancakesService[F]
-) extends WebSocketController[F] {
+) extends Controller[F] {
 
   private val pansQueryInput: EndpointInput.Query[Int] = query[Int]("pans")
     .description("The number of frying pans to use in parallel")
