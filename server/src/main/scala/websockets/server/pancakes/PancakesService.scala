@@ -74,7 +74,7 @@ final private class LivePancakesService[F[_]](implicit
     Stream
       .awakeEvery[F](1.second)
       .map(_ => PancakeReady)
-      .take(count)
+      .take(count.toLong)
 }
 
 object PancakesService {

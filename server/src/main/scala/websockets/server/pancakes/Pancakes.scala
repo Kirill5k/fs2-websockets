@@ -3,6 +3,7 @@ package websockets.server.pancakes
 import cats.effect.Async
 import cats.syntax.flatMap._
 import cats.syntax.functor._
+import org.typelevel.log4cats.Logger
 import websockets.server.common.http.Controller
 
 trait Pancakes[F[_]] {
@@ -10,7 +11,7 @@ trait Pancakes[F[_]] {
 }
 
 object Pancakes {
-  def make[F[_]: Async]: F[Pancakes[F]] =
+  def make[F[_]: Async: Logger]: F[Pancakes[F]] =
     for {
       svc  <- PancakesService.make[F]
       cont <- PancakesController.make[F](svc)

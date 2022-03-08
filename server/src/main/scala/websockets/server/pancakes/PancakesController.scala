@@ -45,6 +45,6 @@ final private class PancakesController[F[_]: Async](
 }
 
 object PancakesController {
-  def make[F[_]: Async](service: PancakesService[F]): F[PancakesController[F]] =
+  def make[F[_]: Async](service: PancakesService[F]): F[Controller[F]] =
     Async[F].pure(new PancakesController[F](service))
 }
