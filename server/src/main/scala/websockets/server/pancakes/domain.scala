@@ -14,7 +14,7 @@ object domain {
 
     implicit val config: Configuration = Configuration.default
       .withDiscriminator("ingredient")
-      .withSnakeCaseConstructorNames
+      .withKebabCaseConstructorNames
 
     implicit val pancakeIngredientCodec: Codec[PancakeIngredient] = deriveConfiguredCodec[PancakeIngredient]
   }
@@ -26,7 +26,7 @@ object domain {
 
     implicit val config: Configuration = Configuration.default
       .withDiscriminator("status")
-      .withSnakeCaseConstructorNames
+      .withKebabCaseConstructorNames
 
     implicit val pancakeStatusCodec: Codec[PancakeStatus] = deriveConfiguredCodec[PancakeStatus]
   }
