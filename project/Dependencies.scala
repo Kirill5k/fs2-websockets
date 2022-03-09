@@ -62,7 +62,7 @@ object Dependencies {
 
     object http4s {
       val blazeServer = "org.http4s" %% "http4s-blaze-server" % Versions.http4s
-      val blazeCore   = "org.http4s" %% "http4s-blaze-core"    % Versions.http4s
+      val blazeCore   = "org.http4s" %% "http4s-blaze-core"   % Versions.http4s
 
       val all = Seq(blazeServer, blazeCore)
     }

@@ -25,9 +25,7 @@ final private class LivePancakesService[F[_]](implicit
   override def bake(fryingPans: Int): F[Pipe[F, PancakeIngredient, PancakeStatus]] =
     Queue
       .bounded[F, PortionIngredients](24)
-      .map { q =>
-        in => accumulate(in, q).merge(fry(fryingPans, q))
-      }
+      .map(q => in => accumulate(in, q).merge(fry(fryingPans, q)))
 
   private def accumulate(
       input: Stream[F, PancakeIngredient],

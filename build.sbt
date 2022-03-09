@@ -20,7 +20,7 @@ val docker = Seq(
   maintainer         := "immotional@aol.com",
   dockerBaseImage    := "amazoncorretto:17.0.1-alpine",
   dockerUpdateLatest := true,
-  makeBatScripts     := List(),
+  makeBatScripts     := Nil,
   dockerCommands := {
     val commands         = dockerCommands.value
     val (stage0, stage1) = commands.span(_ != DockerStageBreak)
@@ -37,6 +37,7 @@ val server = project
   .settings(
     name       := "fs2-websockets-server",
     moduleName := "fs2-websockets-server",
+    scalacOptions ++= Seq("-Xsource:3"),
     libraryDependencies ++= Dependencies.server ++ Dependencies.test
   )
 
