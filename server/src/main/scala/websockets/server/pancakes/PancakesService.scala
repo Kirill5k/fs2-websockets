@@ -2,8 +2,8 @@ package websockets.server.pancakes
 
 import cats.effect.Async
 import cats.effect.std.Queue
-import cats.syntax.flatMap._
-import cats.syntax.functor._
+import cats.syntax.flatMap.*
+import cats.syntax.functor.*
 import fs2.{Pipe, Stream}
 import org.typelevel.log4cats.Logger
 import websockets.server.pancakes.PancakesService.{Ingredients, PortionIngredients}
@@ -11,7 +11,7 @@ import websockets.server.pancakes.domain.PancakeIngredient.{Eggs, Flour, Milk}
 import websockets.server.pancakes.domain.PancakeStatus.{IngredientReceived, PancakeReady}
 import websockets.server.pancakes.domain.{PancakeIngredient, PancakeStatus}
 
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 
 trait PancakesService[F[_]] {
   def bake(fryingPans: Int): F[Pipe[F, PancakeIngredient, PancakeStatus]]
@@ -34,17 +34,13 @@ final private class LivePancakesService[F[_]](implicit
     input
       .evalTap(ingredient => logger.info(s"Received ingredient: $ingredient"))
       .evalMapAccumulate(Ingredients.Empty) { case (ingredients, ingredient) =>
-        val newIngredients = ingredients + ingredient
-
+        val newIngredients                             = ingredients + ingredient
         val (remainingIngredients, portionIngredients) = PortionIngredients.from(newIngredients)
 
-        val enqueueFrying = portionIngredients match {
-          case None => F.unit
-          case Some(pi) =>
-            logger.info(s"Frying pancakes: $pi; remaining ingredients: $remainingIngredients") >> fryingQueue.offer(pi)
-        }
-
-        enqueueFrying.map(_ => (remainingIngredients, IngredientReceived(ingredient)))
+        portionIngredients
+          .map(pi => logger.info(s"Frying pancakes: $pi; remaining ingredients: $remainingIngredients") >> fryingQueue.offer(pi))
+          .getOrElse(F.unit)
+          .map(_ => (remainingIngredients, IngredientReceived(ingredient)))
       }
       .map(_._2)
 
@@ -57,13 +53,10 @@ final private class LivePancakesService[F[_]](implicit
         val singlePanPancakesCount = portionIngredients.pancakeCount / fryingPans
         val extraPancakesCount     = portionIngredients.pancakeCount % fryingPans
 
-        // assigning the number of pancakes to fry to each pan; distributing evenly as possible, and adding one extra
-        // pancake to the remaining ones
-        val pancakesPerFryingPan = (1 to fryingPans).map(i => singlePanPancakesCount + (if (i <= extraPancakesCount) 1 else 0))
-
-        Stream(pancakesPerFryingPan: _*) // a stream of numbers
-          .map(fryingPan)                // a stream of stream descriptions
-          .parJoinUnbounded              // flattening the stream of streams by running them all in parallel
+        Stream
+          .emits((1 to fryingPans).map(i => singlePanPancakesCount + (if (i <= extraPancakesCount) 1 else 0)))
+          .map(fryingPan)   // a stream of stream descriptions
+          .parJoinUnbounded // flattening the stream of streams by running them all in parallel
       }
 
   // a process simulating the behavior of a single frying pan: we assume that the ingredients are ready; frying

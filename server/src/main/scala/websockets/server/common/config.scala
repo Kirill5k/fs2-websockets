@@ -1,8 +1,8 @@
 package websockets.server.common
 
 import cats.effect.Sync
-import pureconfig._
-import pureconfig.generic.auto._
+import pureconfig.*
+import pureconfig.generic.auto.*
 
 object config {
 

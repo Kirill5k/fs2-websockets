@@ -2,15 +2,15 @@ package websockets.server
 
 import cats.Monad
 import cats.effect.Async
-import cats.syntax.semigroupk._
-import org.http4s._
-import org.http4s.implicits._
-import org.http4s.server.middleware._
+import cats.syntax.semigroupk.*
+import org.http4s.*
+import org.http4s.implicits.*
+import org.http4s.server.middleware.*
 import org.http4s.server.websocket.WebSocketBuilder2
 import websockets.server.health.Health
 import websockets.server.pancakes.Pancakes
 
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 
 final class Http[F[_]: Async] private (
     private val health: Health[F],

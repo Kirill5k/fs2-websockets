@@ -1,7 +1,7 @@
 package websockets.server.health
 
 import cats.effect.Async
-import cats.syntax.functor._
+import cats.syntax.functor.*
 import websockets.server.common.http.Controller
 
 trait Health[F[_]] {

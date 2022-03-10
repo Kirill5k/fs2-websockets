@@ -1,7 +1,7 @@
 package websockets.server.pancakes
 
 import io.circe.Codec
-import io.circe.generic.extras._
+import io.circe.generic.extras.*
 import io.circe.generic.extras.semiauto.deriveConfiguredCodec
 
 object domain {

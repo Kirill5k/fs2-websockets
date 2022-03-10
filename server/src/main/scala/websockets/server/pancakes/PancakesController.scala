@@ -1,17 +1,17 @@
 package websockets.server.pancakes
 
 import cats.effect.Async
-import cats.syntax.applicativeError._
-import cats.syntax.either._
-import cats.syntax.functor._
+import cats.syntax.applicativeError.*
+import cats.syntax.either.*
+import cats.syntax.functor.*
 import fs2.Pipe
 import org.http4s.HttpRoutes
 import org.http4s.server.websocket.WebSocketBuilder2
 import sttp.capabilities.WebSockets
 import sttp.capabilities.fs2.Fs2Streams
-import sttp.tapir._
+import sttp.tapir.*
 import sttp.tapir.server.ServerEndpoint.Full
-import sttp.tapir.server.http4s._
+import sttp.tapir.server.http4s.*
 import websockets.server.common.http.Controller
 import websockets.server.pancakes.domain.{PancakeIngredient, PancakeStatus}
 

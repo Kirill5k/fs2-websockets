@@ -1,8 +1,8 @@
 package websockets.server.pancakes
 
 import cats.effect.Async
-import cats.syntax.flatMap._
-import cats.syntax.functor._
+import cats.syntax.flatMap.*
+import cats.syntax.functor.*
 import org.typelevel.log4cats.Logger
 import websockets.server.common.http.Controller
 

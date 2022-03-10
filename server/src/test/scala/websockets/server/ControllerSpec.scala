@@ -4,7 +4,7 @@ import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import org.typelevel.log4cats.Logger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
-import io.circe.parser._
+import io.circe.parser.*
 import org.http4s.{Response, Status}
 import org.scalatest.Assertion
 import org.scalatest.matchers.must.Matchers

@@ -3,15 +3,15 @@ package websockets.server.health
 import cats.effect.Async
 import cats.effect.Ref
 import cats.effect.Temporal
-import cats.syntax.flatMap._
-import cats.syntax.functor._
+import cats.syntax.flatMap.*
+import cats.syntax.functor.*
 import io.circe.Codec
 import io.circe.generic.semiauto.deriveCodec
 
 import java.time.Instant
 import org.http4s.HttpRoutes
 import org.http4s.server.websocket.WebSocketBuilder2
-import sttp.tapir._
+import sttp.tapir.*
 import sttp.tapir.server.ServerEndpoint
 import sttp.tapir.server.http4s.Http4sServerInterpreter
 import websockets.server.common.http.Controller

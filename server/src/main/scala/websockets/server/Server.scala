@@ -6,7 +6,7 @@ import org.http4s.blaze.server.BlazeServerBuilder
 import websockets.server.common.config.ServerConfig
 
 import scala.concurrent.ExecutionContext
-import scala.concurrent.duration._
+import scala.concurrent.duration.*
 
 object Server {
   def serve[F[_]: Async](config: ServerConfig, http: Http[F], ec: ExecutionContext): Stream[F, Unit] =
