@@ -87,7 +87,7 @@ object PancakesService {
   final case class PortionIngredients(ingredients: Ingredients, pancakeCount: Int)
 
   object PortionIngredients {
-    val SinglePortion: Ingredients = Ingredients(250, 0.35, 2) // e.g. https://www.kwestiasmaku.com/kuchnia_polska/nalesniki/nalesniki.html
+    val SinglePortion: Ingredients = Ingredients(250, 0.35, 2)
     val SinglePortionPancakeCount  = 10
 
     /** @return
